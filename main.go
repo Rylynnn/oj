@@ -2,17 +2,14 @@ package main
 
 import (
 	"net/http"
+	"oj/controller"
 
 	"github.com/codegangsta/negroni"
-	"github.com/unrolled/render"
 )
 
 func main() {
-	r := render.New(render.Options{})
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
-		r.HTML(w, http.StatusOK, "index", nil)
-	})
+	mux.HandleFunc("/", controller.HandlHome)
 
 	n := negroni.New(
 		negroni.NewRecovery(),
