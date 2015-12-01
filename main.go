@@ -8,6 +8,7 @@ import (
 )
 
 func main() {
+	controller.Init()
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", controller.HandlHome)
 
@@ -17,5 +18,4 @@ func main() {
 	)
 	n.UseHandler(mux)
 	n.Run(":8080")
-
 }

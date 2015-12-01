@@ -1,19 +1,17 @@
 package controller
 
 import (
-	"html/template"
 	"net/http"
-	"path"
+
+	"github.com/unrolled/render"
 )
 
+var Render *render.Render
+
+func Init() {
+	Render = render.New()
+}
+
 func HandlHome(w http.ResponseWriter, req *http.Request) {
-	fp := path.Join("templates", "index.html")
-	tmpl, err := template.ParseFiles(fp)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	if err := tmpl.Execute(w, nil); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
+	Render.HTML(w, http.StatusOK, "index", nil)
 }
