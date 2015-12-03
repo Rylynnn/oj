@@ -11,7 +11,8 @@ func main() {
 	controller.Init()
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", controller.HandlHome)
-
+	//add static file server for include static files
+	mux.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
 	n := negroni.New(
 		negroni.NewRecovery(),
 		negroni.NewLogger(),
