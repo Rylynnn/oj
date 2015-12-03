@@ -1,11 +1,15 @@
 package middleware
 
-import "net/http"
+import (
+	"net/http"
+	"net/url"
+	"strings"
+)
 
-//Permission :Use to check permission when user touch '/admin/*'
+//Permission :Use to check permission when user touch '/admin/*' (Yet finish)
 func Permission(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	//明天在写这坨代码 - -
-	if r.URL.Query().Get("password") == "secret123" {
+	u, _ := url.ParseRequestURI(r.URL.String())
+	if !strings.HasPrefix(u.Path, "/admin") {
 		next(w, r)
 	} else {
 		http.Error(w, "Not Authorized", 401)
