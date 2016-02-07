@@ -1,1 +1,193 @@
+<br>
+<div class="container">
+    <h2>Problems</h2>
+    <br>
+    <div class="card">
+        <div class="card-header">
+            <a class="gray" href="#" data-toggle="modal" data-target="#addModal"><i class="fa fa-plus"></i></a>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <strong><a href="#" class="black">A + B Problem</a></strong>&nbsp;&nbsp;<span class="label label-primary">dp</span>&nbsp;
+                <span class="label label-success">brute-force</span>
+                <br>
+                <small class="comment-phrase"> #1000 43%(100/1729)</small>
+            </li>
+            <li class="list-group-item">
+                <strong><a href="#" class="black">Load file</a></strong>&nbsp;&nbsp;<span class="label label-info">net-flow</span>&nbsp;
+                <span class="label label-warning">bit</span>
+                <br>
+                <small class="comment-phrase"> #1001 67%(13/40)</small>
+            </li>
+            <li class="list-group-item">
+                <strong><a href="#" class="black">Dr. time machine</a></strong>&nbsp;&nbsp;<span class="label label-danger">math</span>
+                <br>
+                <small class="comment-phrase"> #1002 13%(1/3)</small>
+            </li>
+            {{range .Problems}}
+            <li class="list-group-item">
+                <strong><a href="/problem?id={{.ID}}" class="black">{{.Title}}</a></strong>&nbsp;&nbsp;
+                <a href="#" class="pull-right" data-toggle="modal" data-target="#editModal{{.ID}}"><i class="fa fa-pencil"></i></a>
+                <!-- <span class="label label-danger">math</span> -->
+                <br>
+                <small class="comment-phrase"> #{{.ID}} {{.AcRate}}%({{.Ac}}/{{.Total}})</small>
+            </li>
+            <div id="editModal{{.ID}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                <span class="sr-only">Close</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Edit Problem</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="editproblemform">
+                                <label for="id" class="control-label">id:</label>
+                                <input type="text" name="id" class="form-control" readonly value="{{.ID}}">
+                                <label for="title" class="control-label">title:</label>
+                                <input type="text" name="title" class="form-control" value="{{.Title}}">
+                                <label for="time" class="control-label">time:</label>
+                                <input type="text" name="time" class="form-control" value="{{.Time}}">
+                                <label for="memory" class="control-label">memory:</label>
+                                <input type="text" name="memory" class="form-control" value="{{.Memory}}">
+                                <label for="description" class="control-label">description:</label>
+                                <textarea name="description" class="form-control" >{{.Description}}</textarea>
+                                <label for="sampleinput" class="control-label">sample input:</label>
+                                <textarea name="sampleinput" class="form-control">{{.SampleInput}}</textarea>
+                                <label for="sampleoutput" class="control-label">sample output:</label>
+                                <textarea name="sampleoutput" class="form-control">{{.SampleOutput}}</textarea>
+                                <label for="standardinput" class="control-label">standard input:</label>
+                                <textarea name="standardinput" class="form-control">{{.StandardInput}}</textarea>
+                                <label for="standardoutput" class="control-label">standard output:</label>
+                                <textarea name="standardoutput" class="form-control">{{.StandardOutput}}</textarea>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <input type="submit" id="remove" data-dismiss="modal" class="btn btn-danger" value="Remove Problem">
+                            <input type="submit" id="submitUpdate" data-dismiss="modal" class="btn btn-primary" value="Save Problem">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{end}}
+        </ul>
+    </div>
+    <nav>
+        <ul class="pagination">
+            <li class="page-item {{if not .CanPrevious}}disabled{{end}}">
+                <a class="page-link" href="/problem?page={{.PreviousPage}}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            {{range .Pagination}}
+              <li class="page-item {{if eq $.CurrentPage .}}active{{end}}"><a class="page-link" href="/problems?page={{.}}">{{.}}</a></li>
+            {{end}}
+            <li class="page-item {{if not .CanNext}}disabled{{end}} ">
+                <a class="page-link" href="/problem?page={{.NextPage}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
 
+<div id="addModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Add Problem</h4>
+            </div>
+            <div class="modal-body">
+                <form id="addproblemform">
+                    <label for="title" class="control-label">title:</label>
+                    <input type="text" name="title" class="form-control">
+                    <label for="time" class="control-label">time:</label>
+                    <input type="text" name="time" class="form-control">
+                    <label for="memory" class="control-label">memory:</label>
+                    <input type="text" name="memory" class="form-control">
+                    <label for="description" class="control-label">description:</label>
+                    <textarea name="description" class="form-control"></textarea>
+                    <label for="sampleinput" class="control-label">sample input:</label>
+                    <textarea name="sampleinput" class="form-control"></textarea>
+                    <label for="sampleoutput" class="control-label">sample output:</label>
+                    <textarea name="sampleoutput" class="form-control"></textarea>
+                    <label for="standardinput" class="control-label">standard input:</label>
+                    <textarea name="standardinput" class="form-control"></textarea>
+                    <label for="standardoutput" class="control-label">standard output:</label>
+                    <textarea name="standardoutput" class="form-control"></textarea>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <input type="submit" id="submitAdd" data-dismiss="modal" class="btn btn-primary" value="Save Problem">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+    $("input#submitAdd").click(function () {
+        $.ajax({
+            type: "POST",
+            url: "/problem/add",
+            data: $('form#addproblemform').serialize(),
+            success: function (msg) {
+                //alert("Successfully")
+                //$("#thanks").html(msg) //hide button and show thank you
+                //$("#form-content").modal('hide'); //hide popup
+            },
+            error: function () {
+                //alert("failure");
+            }
+        });
+    });
+});
+
+$(document).ready(function () {
+$("input#submitUpdate").click(function () {
+    $.ajax({
+        type: "POST",
+        url: "/problem/update",
+        data: $('form#editproblemform').serialize(),
+        success: function (msg) {
+            //alert("Successfully")
+            //$("#thanks").html(msg) //hide button and show thank you
+            //$("#form-content").modal('hide'); //hide popup
+        },
+        error: function () {
+            //alert("failure");
+        }
+    });
+});
+});
+
+$(document).ready(function () {
+$("input#remove").click(function () {
+    $.ajax({
+        type: "POST",
+        url: "/problem/remove",
+        data: $('form#editproblemform').serialize(),
+        success: function (msg) {
+          //  alert("Successfully")
+            //$("#thanks").html(msg) //hide button and show thank you
+            //$("#form-content").modal('hide'); //hide popup
+        },
+        error: function () {
+            //alert("failure");
+        }
+    });
+});
+});
+</script>

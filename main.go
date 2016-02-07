@@ -9,9 +9,12 @@ import (
 )
 
 func main() {
-	controller.Init()
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", controller.HandlHome)
+	mux.HandleFunc("/problem", controller.HandleProblem)
+	mux.HandleFunc("/problem/add", controller.HandleAddProblem)
+	mux.HandleFunc("/problem/remove", controller.HandleRemoveProblem)
+	mux.HandleFunc("/problem/update", controller.HandleUpdateProblem)
+	mux.HandleFunc("/", controller.HandleHome)
 	//add static file server for include static files
 	mux.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
 	n := negroni.New(
