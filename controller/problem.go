@@ -3,7 +3,7 @@ package controller
 import (
 	"log"
 	"net/http"
-	"oj/model"
+	"github.com/Miloas/oj/model"
 
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"

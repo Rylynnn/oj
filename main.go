@@ -2,8 +2,8 @@ package main
 
 import (
 	"net/http"
-	"oj/controller"
-	"oj/middleware"
+	"github.com/Miloas/oj/controller"
+	"github.com/Miloas/oj/middleware"
 
 	"github.com/codegangsta/negroni"
 )
