@@ -1,12 +1,10 @@
 package controller
 
 import (
-	"log"
 	"net/http"
-	"github.com/Miloas/oj/model"
 	"strconv"
 
-	"gopkg.in/mgo.v2"
+	"github.com/Miloas/oj/model"
 )
 
 const pageNum int = 1
@@ -28,12 +26,9 @@ func HandleHome(w http.ResponseWriter, req *http.Request) {
 	if tmp := req.URL.Query().Get("page"); tmp != "" {
 		p, _ = strconv.Atoi(tmp)
 	}
-	S, err := mgo.Dial("localhost:27017")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer S.Close()
-	c := S.DB("oj").C("problems")
+	session := getMongoS()
+	defer session.Close()
+	c := session.DB("oj").C("problems")
 	count, err := c.Count()
 	totalPage := (count + pageNum - 1) / pageNum
 	problems := []model.Problem{}

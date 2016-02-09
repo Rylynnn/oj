@@ -1,12 +1,11 @@
 package controller
 
 import (
-	"log"
 	"net/http"
-	"github.com/Miloas/oj/model"
 	"strconv"
 
-	"gopkg.in/mgo.v2"
+	"github.com/Miloas/oj/model"
+
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -14,13 +13,9 @@ import (
 func HandleAddProblem(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		r.ParseForm()
-		S, err := mgo.Dial("localhost:27017")
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer S.Close()
-		S.SetMode(mgo.Monotonic, true)
-		c := S.DB("oj").C("problems")
+		session := getMongoS()
+		defer session.Close()
+		c := session.DB("oj").C("problems")
 		count, err := c.Count()
 		if err != nil {
 			count = 0
@@ -42,13 +37,10 @@ func HandleAddProblem(w http.ResponseWriter, r *http.Request) {
 func HandleRemoveProblem(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		r.ParseForm()
-		S, err := mgo.Dial("localhost:27017")
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer S.Close()
-		c := S.DB("oj").C("problems")
-		err = c.Remove(bson.M{"id": r.Form["id"][0]})
+		session := getMongoS()
+		defer session.Close()
+		c := session.DB("oj").C("problems")
+		err := c.Remove(bson.M{"id": r.Form["id"][0]})
 		if err != nil {
 			panic(err)
 		}
@@ -60,16 +52,12 @@ func HandleRemoveProblem(w http.ResponseWriter, r *http.Request) {
 func HandleUpdateProblem(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		r.ParseForm()
-		S, err := mgo.Dial("localhost:27017")
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer S.Close()
-		S.SetMode(mgo.Monotonic, true)
-		c := S.DB("oj").C("problems")
+		session := getMongoS()
+		defer session.Close()
+		c := session.DB("oj").C("problems")
 		t, _ := strconv.Atoi(r.Form["time"][0])
 		m, _ := strconv.Atoi(r.Form["memory"][0])
-		err = c.Update(bson.M{"id": r.Form["id"][0]},
+		err := c.Update(bson.M{"id": r.Form["id"][0]},
 			bson.M{"$set": bson.M{
 				"title":          r.Form["title"][0],
 				"time":           t,
