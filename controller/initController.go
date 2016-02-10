@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"github.com/garyburd/redigo/redis"
 	"github.com/unrolled/render"
 	"gopkg.in/mgo.v2"
 )
@@ -11,6 +12,8 @@ var (
 	//S :mgo session
 	S            *mgo.Session
 	databaseName = "oj"
+	//RedisPool :Redis connection pool
+	RedisPool *redis.Pool
 )
 
 // Init :init controller methods
@@ -19,15 +22,5 @@ func init() {
 		Directory: "templates",
 		Layout:    "layout",
 	})
-}
-
-func getMongoS() *mgo.Session {
-	if S == nil {
-		var err error
-		S, err = mgo.Dial("localhost:27017")
-		if err != nil {
-			panic(err)
-		}
-	}
-	return S.Clone()
+	RedisPool = newRedisPool()
 }
