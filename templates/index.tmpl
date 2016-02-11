@@ -66,7 +66,7 @@
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <input type="submit" id="remove" data-dismiss="modal" class="btn btn-danger" value="Remove Problem">
+                            <input type="submit" id="submitRemove" data-dismiss="modal" class="btn btn-danger" value="Remove Problem">
                             <input type="submit" id="submitUpdate" data-dismiss="modal" class="btn btn-primary" value="Save Problem">
                         </div>
                     </div>
@@ -144,9 +144,7 @@
             url: "/problem/add",
             data: $('form#addproblemform').serialize(),
             success: function (msg) {
-                //alert("Successfully")
-                //$("#thanks").html(msg) //hide button and show thank you
-                //$("#form-content").modal('hide'); //hide popup
+              window.location.href = "/"
             },
             error: function () {
                 //alert("failure");
@@ -162,9 +160,7 @@ $("input#submitUpdate").click(function () {
         url: "/problem/update",
         data: $('form#editproblemform').serialize(),
         success: function (msg) {
-            //alert("Successfully")
-            //$("#thanks").html(msg) //hide button and show thank you
-            //$("#form-content").modal('hide'); //hide popup
+          window.location.href = "/"
         },
         error: function () {
             //alert("failure");
@@ -174,15 +170,13 @@ $("input#submitUpdate").click(function () {
 });
 
 $(document).ready(function () {
-$("input#remove").click(function () {
+$("input#submitRemove").click(function () {
     $.ajax({
         type: "POST",
         url: "/problem/remove",
         data: $('form#editproblemform').serialize(),
         success: function (msg) {
-          //  alert("Successfully")
-            //$("#thanks").html(msg) //hide button and show thank you
-            //$("#form-content").modal('hide'); //hide popup
+          window.location.href = "/"
         },
         error: function () {
             //alert("failure");

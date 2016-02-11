@@ -44,7 +44,6 @@ func HandleRemoveProblem(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			panic(err)
 		}
-		http.RedirectHandler("/", http.StatusMovedPermanently)
 	}
 }
 

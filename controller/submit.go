@@ -1,12 +1,25 @@
 package controller
 
-import "net/http"
+import (
+	"encoding/json"
+	"net/http"
+)
 
-//HandleSubmitCode : Handle user submited code from problem page
+type judgeQueueNode struct {
+	ID   string
+	Code string
+}
+
+//HandleSubmitCode : handle submited code action
 func HandleSubmitCode(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "POST" {
-		c := RedisPool.Get()
-		defer c.Close()
-		//	c.Do("LPUSH", "judgeQueue", "test")
-	}
+	c := RedisPool.Get()
+	defer c.Close()
+	r.ParseForm()
+
+	//c.Do("LPUSH", "judgeQueue", r.Form["submitedCode"][0])
+	sendData, _ := json.Marshal(&judgeQueueNode{
+		ID:   r.URL.Query().Get("id"),
+		Code: r.Form["submitedCode"][0]})
+	c.Do("LPUSH", "judgeQueue", sendData)
+	http.Redirect(w, r, "/status", http.StatusFound)
 }

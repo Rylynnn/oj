@@ -11,11 +11,12 @@ import (
 
 func main() {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/problem", controller.HandleProblem)
 	mux.HandleFunc("/problem/add", controller.HandleAddProblem)
 	mux.HandleFunc("/problem/remove", controller.HandleRemoveProblem)
 	mux.HandleFunc("/problem/update", controller.HandleUpdateProblem)
 	mux.HandleFunc("/problem/submit", controller.HandleSubmitCode)
+	mux.HandleFunc("/problem", controller.HandleProblem)
+	mux.HandleFunc("/status", controller.HandleStatus)
 	//display problems list
 	mux.HandleFunc("/", controller.HandleHome)
 	//add static file server for include static files
