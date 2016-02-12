@@ -8,4 +8,5 @@ type Status struct {
 	Time       string
 	Memory     string
 	Result     string
+	Lang       string
 }

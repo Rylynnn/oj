@@ -7,9 +7,9 @@ import (
 	"github.com/Miloas/oj/model"
 )
 
-const pageNum int = 1
+const problemsPageNum int = 1
 
-type pageStruct struct {
+type problemsPageStruct struct {
 	CurrentPage  int
 	NextPage     int
 	PreviousPage int
@@ -20,19 +20,19 @@ type pageStruct struct {
 }
 
 //HandleHome :handle "/"
-func HandleHome(w http.ResponseWriter, req *http.Request) {
+func HandleHome(w http.ResponseWriter, r *http.Request) {
 	//假设page是整数,回头改这
 	p := 0
-	if tmp := req.URL.Query().Get("page"); tmp != "" {
+	if tmp := r.URL.Query().Get("page"); tmp != "" {
 		p, _ = strconv.Atoi(tmp)
 	}
 	session := getMongoS()
 	defer session.Close()
 	c := session.DB("oj").C("problems")
 	count, err := c.Count()
-	totalPage := (count + pageNum - 1) / pageNum
+	totalPage := (count + problemsPageNum - 1) / problemsPageNum
 	problems := []model.Problem{}
-	err = c.Find(nil).Limit(pageNum).Skip(pageNum * p).All(&problems)
+	err = c.Find(nil).Limit(problemsPageNum).Skip(problemsPageNum * p).All(&problems)
 	if err != nil {
 		panic(err)
 	}
@@ -47,6 +47,6 @@ func HandleHome(w http.ResponseWriter, req *http.Request) {
 	if p-1 >= 0 {
 		canPrevious = true
 	}
-	result := pageStruct{p, p + 1, p - 1, canNext, canPrevious, pagination, problems}
+	result := problemsPageStruct{p, p + 1, p - 1, canNext, canPrevious, pagination, problems}
 	Render.HTML(w, http.StatusOK, "index", result)
 }

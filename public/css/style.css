@@ -44,9 +44,16 @@ body {
   font-size: 1%;
 }
 
+/* Color class */
 .gray {
   color: gray;
 }
 .black {
   color: black;
+}
+.green {
+  color:green;
+}
+.red {
+  color:red;
 }

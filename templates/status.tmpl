@@ -1,0 +1,44 @@
+<br>
+<div class="container">
+<table class="table">
+  <thead class="thead-inverse">
+    <tr>
+      <th>User</th>
+      <th>Problem</th>
+      <th>Result</th>
+      <th>Memory</th>
+      <th>Time</th>
+      <th>Lang</th>
+      <th>Submit Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">miloas</th>
+      <td>1000</td>
+      <td class="green">Accepted</td>
+      <td>323k</td>
+      <td>0.01</td>
+      <td>c++</td>
+      <td>2014-01-07 09:32:12</td>
+    </tr>
+    {{range .Status}}
+    <tr>
+      <th scope="row">{{.User}}</th>
+      <td>{{.ID}}</td>
+      <td class="{{if eq .Result "Accepted"}}green{{end}}">{{.Result}}</td>
+      <td>{{.Memory}}</td>
+      <td>{{.Time}}</td>
+      <td>{{.Lang}}</td>
+      <td>{{.SubmitTime}}</td>
+    </tr>
+    {{end}}
+  </tbody>
+</table>
+<nav>
+  <ul class="pager">
+    <li class="pager-prev {{if not .CanPrevious}}disabled{{end}}"><a href="#">Previous</a></li>
+    <li class="pager-next {{if not .CanNext}}disabled{{end}}"><a href="#">Next</a></li>
+  </ul>
+</nav>
+</div>
