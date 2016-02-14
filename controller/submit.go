@@ -6,6 +6,7 @@ import (
 )
 
 type judgeQueueNode struct {
+	User string
 	ID   string
 	Code string
 }
@@ -18,6 +19,7 @@ func HandleSubmitCode(w http.ResponseWriter, r *http.Request) {
 
 	//c.Do("LPUSH", "judgeQueue", r.Form["submitedCode"][0])
 	sendData, _ := json.Marshal(&judgeQueueNode{
+		User: "miloas",
 		ID:   r.URL.Query().Get("id"),
 		Code: r.Form["submitedCode"][0]})
 	c.Do("LPUSH", "judgeQueue", sendData)
