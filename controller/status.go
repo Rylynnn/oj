@@ -35,7 +35,7 @@ func HandleStatus(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 	canNext, canPrevious := false, false
-	if p+1 <= totalPage {
+	if p+1 < totalPage {
 		canNext = true
 	}
 	if p-1 >= 0 {

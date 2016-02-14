@@ -41,7 +41,7 @@ func HandleHome(w http.ResponseWriter, r *http.Request) {
 		pagination = append(pagination, i)
 	}
 	canNext, canPrevious := false, false
-	if p+1 <= totalPage {
+	if p+1 < totalPage {
 		canNext = true
 	}
 	if p-1 >= 0 {
