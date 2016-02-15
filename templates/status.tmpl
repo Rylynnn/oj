@@ -13,20 +13,11 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">miloas</th>
-      <td>1000</td>
-      <td class="green">Accepted</td>
-      <td>323k</td>
-      <td>0.01</td>
-      <td>c++</td>
-      <td>2014-01-07 09:32:12</td>
-    </tr>
     {{range .Status}}
     <tr>
       <th scope="row">{{.User}}</th>
       <td>{{.ID}}</td>
-      <td class="{{if eq .Result "Accepted"}}green{{end}}">{{.Result}}</td>
+      <td class="{{if eq .Result "ACCEPTED"}}green{{end}}">{{.Result}}</td>
       <td>{{.Memory}}</td>
       <td>{{.Time}}</td>
       <td>{{.Lang}}</td>

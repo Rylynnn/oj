@@ -7,7 +7,7 @@ import (
 	"github.com/Miloas/oj/model"
 )
 
-const statusPageNum int = 1
+const statusPageNum int = 10
 
 type statusPageStruct struct {
 	CurrentPage  int

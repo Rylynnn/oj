@@ -57,3 +57,13 @@ body {
 .red {
   color:red;
 }
+
+/*style dropdown width*/
+.dropdown-menu {
+  min-width:300px;
+}
+/*style create Account modal width*/
+#createAccountModal .modal-dialog
+{
+  width: 30%;
+}
